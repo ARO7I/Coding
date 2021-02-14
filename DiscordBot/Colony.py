@@ -1,5 +1,5 @@
 from random import shuffle, choice
-from discord import Embed
+from discord import Game, Embed
 from discord.ext import commands
 from Token import Colony
 
@@ -11,6 +11,7 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print("------")
+    await bot.change_presence(activity=Game(name="!help"))
 
 @bot.command(name="순서")
 async def 순서(ctx, *args):
@@ -19,13 +20,13 @@ async def 순서(ctx, *args):
     else:
         args = list(args)
         shuffle(args)
-        await ctx.send(embed = Embed(title="순서", description=" - ".join(args)))
+        await ctx.send(embed=Embed(title="순서", description=" - ".join(args)))
 
 @bot.command(name="뽑기")
 async def 뽑기(ctx, *args):
     if(len(args) == 0):
         await ctx.send("```!뽑기 [args...]```")
     else:
-        await ctx.send(embed = Embed(title="뽑기", description=choice(args)))
+        await ctx.send(embed=Embed(title="뽑기", description=choice(args)))
 
 bot.run(Colony())
