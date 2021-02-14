@@ -17,7 +17,7 @@ async def 순서(ctx, *args):
         await ctx.send("!순서 {1} {2} {3}...")
     else:
         arg = list(args)
-        random.shuffle(arg)
+        shuffle(arg)
         await ctx.send(" ".join(arg))
 
 @bot.command(name="뽑기")
@@ -25,6 +25,6 @@ async def 뽑기(ctx, *args):
     if(len(args) == 0):
         await ctx.send("!뽑기 {1} {2} {3}...")
     else:
-        await ctx.send(random.choice(args))
+        await ctx.send(choice(args))
 
 bot.run(Colony())
