@@ -13,6 +13,13 @@ async def on_ready():
     print("------")
     await bot.change_presence(activity=Game(name="!help"))
 
+@bot.command(name="뽑기")
+async def 뽑기(ctx, *args):
+    if(len(args) == 0):
+        await ctx.send("```!뽑기 [args...]```")
+    else:
+        await ctx.send(embed=Embed(title="뽑기", description=choice(args)))
+
 @bot.command(name="순서")
 async def 순서(ctx, *args):
     if(len(args) == 0):
@@ -22,11 +29,23 @@ async def 순서(ctx, *args):
         shuffle(args)
         await ctx.send(embed=Embed(title="순서", description=" - ".join(args)))
 
-@bot.command(name="뽑기")
-async def 뽑기(ctx, *args):
-    if(len(args) == 0):
-        await ctx.send("```!뽑기 [args...]```")
+@bot.command(name="사다리")
+async def 사다리(ctx, *args):
+    if(len(args) == 0 or (len(args) % 2) == 1):
+        await ctx.send("```!사다리 [args...] [args...]```")
     else:
-        await ctx.send(embed=Embed(title="뽑기", description=choice(args)))
+        a1 = list(args[:len(args) // 2])
+        a2 = list(args[len(args) // 2:])
+        shuffle(a1)
+        shuffle(a2)
+
+        res = []
+        for i in range(len(a1)):
+            res.append(a1[i])
+            res.append(" - ")
+            res.append(a2[i])
+            res.append("\n")
+
+        await ctx.send(embed=Embed(title="사다리", description="".join(res)))
 
 bot.run(Colony())
