@@ -1,0 +1,6 @@
+asgiref<3.4, >=3.3
+Django<3.2, >=3.1
+gunicorn<20.1, >=20.0
+psycopg2<2.9, >=2.8
+pytz<2022, >=2021
+sqlparse<0.5, >=0.4

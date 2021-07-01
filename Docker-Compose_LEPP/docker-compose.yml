@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+    postgresql:
+        image: postgres:13
+        container_name: ${APP_NAME:?err}_postgresql
+        restart: always
+
+        env_file:
+            - ./settings/env/postgresql.env
+
+        volumes:
+            - ./database:/var/lib/postgresql/data
+
+    python:
+        build: ./settings/python
+        container_name: ${APP_NAME:?err}_python
+        restart: always
+        working_dir: /project
+        command: bash -c "python manage.py migrate &&
+                          gunicorn project.wsgi:application -b 0.0.0.0:8000"
+
+        env_file:
+            - ./settings/env/python.env
+
+        links:
+            - postgresql:db
+
+        volumes:
+            - ./project:/project
+
+        depends_on:
+            - postgresql
+
+    nginx:
+        image: nginx:1.19
+        container_name: ${APP_NAME:?err}_nginx
+        restart: always
+
+        ports:
+            - "8000:80"
+        links:
+            - python:server
+
+        volumes:
+            - ./project/static:/static
+            - ./settings/nginx:/etc/nginx/conf.d
+
+        depends_on:
+            - python

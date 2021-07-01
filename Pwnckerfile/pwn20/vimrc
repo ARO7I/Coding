@@ -1,0 +1,59 @@
+set number
+set ai
+set si
+set shiftwidth=4
+set tabstop=4
+set ignorecase
+set cindent
+set autoindent
+set smartindent
+set hlsearch
+set expandtab
+set background=dark
+set fileencodings=utf-8,euc-kr
+set bs=indent,eol,start
+set ruler
+set nobackup
+set title
+set nowrap
+set wmnu
+set hidden
+syntax on
+
+let mapleader = ","
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ":t"
+let g:airline_theme = "murmur"
+
+map <Leader>t <ESC>:NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen = 1
+let NERDTreeIgnore = ["@eaDir", "Icon*", "desktop.ini", "Thumbs.db"]
+autocmd BufEnter * lcd %:p:h
+autocmd VimEnter * if !argc() | NERDTree | endif
+
+nmap <Leader>T :enew<CR>
+nmap <Leader>bq :bp <BAR> bd #<CR>
+nmap <Leader>" :split<CR>
+nmap <Leader>% :vsplit<CR>
+
+let g:buffergator_viewport_split_policy = "R"
+let g:buffergator_suppress_keymaps = 1
+let g:buffergator_mru_cycle_loop = 1
+nmap <Leader>h :BuffergatorMruCyclePrev<CR>
+nmap <Leader>l :BuffergatorMruCycleNext<CR>
+nmap <Leader>bl :BuffergatorOpen<CR>
+
+map <F9> :! gcc "%" -o "%<"<CR>
+map <F10> :! ./"%<"<CR>
+
+call plug#begin("~/.vim/plugged")
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'preservim/nerdtree'
+Plug 'levelone/tequila-sunrise.vim'
+call plug#end()
+
+colorscheme tequila-sunrise
